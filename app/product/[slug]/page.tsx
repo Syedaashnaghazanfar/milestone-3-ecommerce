@@ -1,41 +1,48 @@
 import { client } from "@/sanity/lib/client";
+import { groq } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 
-// Function to generate static paths for all posts
-export async function generateStaticParams() {
-  const query = `*[_type == "product"]{ "slug": slug.current }`;
-  const products = await client.fetch(query);
 
-  return products.map((products: { slug: string }) => ({
-    slug: products.slug,
-  }));
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  priceWithoutDiscount: number;
+  rating: number;
+  ratingCount: number;
+  tags: string[];
+  sizes: string[];
+  imageUrl: string;
+  slugCurrent: string;
+}
+interface ProductPageProps {
+  params: Promise<{ slug: string }>; // Mark params as a Promise
 }
 
-// Fetch data for a specific post dynamically
-export default async function PostPage({ params }: { params: { slug: string } }){
-  const resolvedParams = await params; // Await the promise to resolve `params`
-  const { slug } = resolvedParams;
-
-  
-  const query = `
-    *[_type == "product" && slug.current == $slug][0]{
-        _id,
-        name,
-        description,
-       "slugCurrent": slug.current,
-        price,
-        discountPercentage,
-        priceWithoutDiscount,
-        rating,
-        ratingCount,
-        tags,
-        sizes,
-        "imageUrl": image.asset->url
+async function getProduct(slug: string): Promise<Product | null> {
+  const product = await client.fetch(groq`*[_type == "product" && slug.current == $slug][0]{
+    _id,
+    name, 
+    description,
+    price,
+    discountPercentage,
+    priceWithoutDiscount,
+    rating,
+    ratingCount,
+    tags,
+    sizes,
+    "imageUrl": image.asset->url,
+    "slugCurrent": slug.current
+  }`, { slug });
+     return product || null;
     }
-  `;
-  const post = await client.fetch(query, { slug });
 
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params; // Explicitly await params
+  const post = await getProduct(slug)
   
   if (!post) {
     return <p>Post not found</p>;
