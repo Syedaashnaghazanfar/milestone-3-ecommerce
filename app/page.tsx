@@ -17,8 +17,9 @@ export default function Home() {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 3000);
+    
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]); // Include images.length in the dependency array
 
   return (
 

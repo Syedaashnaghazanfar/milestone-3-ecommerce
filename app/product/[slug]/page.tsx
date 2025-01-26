@@ -2,20 +2,6 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 
-// Defining the Product type
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  priceWithoutDiscount: number;
-  rating: number;
-  ratingCount: number;
-  sizes: string[];
-  imageUrl: string;
-}
-
 // Function to generate static paths for all posts
 export async function generateStaticParams() {
   const query = `*[_type == "product"]{ "slug": slug.current }`;

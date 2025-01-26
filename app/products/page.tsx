@@ -10,7 +10,7 @@ type Product = {
   description: string;
   price: number;
   imageUrl: string;
-  slugCurrent: any;
+  slugCurrent: string;
 };
 
 export default async function Home() {

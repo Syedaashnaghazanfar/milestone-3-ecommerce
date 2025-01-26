@@ -4,7 +4,6 @@ import team2 from "@/public/images/team-1-user-2.jpg";
 import team3 from "@/public/images/team-1-user-3.jpg";
 import Image from "next/image";
 import bg from "@/public/images/about.jpg";
-import Navbar from "../components/navbar";
 
 const AboutUs = () => {
   return (

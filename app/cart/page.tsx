@@ -13,7 +13,7 @@ const Page = () => {
       {/* Empty Cart Message */}
       <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-sm mx-auto">
         <p className="text-xl text-gray-700 mb-4">Your cart is empty.</p>
-        <p className="text-gray-500">Looks like you haven't added anything to your cart yet. Start shopping now!</p>
+        <p className="text-gray-500">Looks like you have not added anything to your cart yet. Start shopping now!</p>
 
         {/* Button to go back to shopping */}
         <Link href="/products">

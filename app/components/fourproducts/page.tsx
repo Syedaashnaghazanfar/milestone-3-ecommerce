@@ -12,8 +12,7 @@ type Product = {
   description: string;
   price: number;
   imageUrl: string;
-  slugCurrent: any;
-  slug: { current: string };
+  slugCurrent: string;
 };
 
 export default function FourProducts() {
